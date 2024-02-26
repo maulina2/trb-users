@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  trb-users-back:
+    container_name: trb-users-back
+    build: ./
+    ports:
+      - "8082:8080"
+    depends_on:
+      - trb-users-db
+    env_file:
+      - .env
+  trb-users-db:
+    container_name: trb-users-db
+    image: postgres:15
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - trb-users-db:/var/lib/postgresql/data
+    env_file:
+      - .env
+
+volumes:
+  trb-users-db: { }

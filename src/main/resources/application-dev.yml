@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5402/trb-users
+    username: trb-users
+    password: trb-users
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true

@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  trb-users-db-dev:
+    container_name: trb-users-db-dev
+    image: postgres:15
+    environment:
+      POSTGRES_DB: trb-users
+      POSTGRES_USER: trb-users
+      POSTGRES_PASSWORD: trb-users
+    ports:
+      - "5402:5432"
+    volumes:
+      - trb-users-db-dev:/var/lib/postgresql/data
+
+volumes:
+  trb-users-db-dev: { }
