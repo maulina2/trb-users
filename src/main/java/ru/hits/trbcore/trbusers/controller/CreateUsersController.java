@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.hits.trbcore.trbusers.dto.ClientDto;
+import ru.hits.trbcore.trbusers.dto.OfficerDto;
 import ru.hits.trbcore.trbusers.dto.SignUpDto;
 import ru.hits.trbcore.trbusers.service.CreateUserService;
 
@@ -25,6 +26,13 @@ public class CreateUsersController {
     ClientDto createClient (@Valid @RequestBody SignUpDto signUpDto) {
 
        return createUserService.createClient(signUpDto);
+    }
+
+    @Operation(summary = "Зарегистрировать сотрудника.")
+    @PostMapping("/create-officer")
+    OfficerDto createOfficer(@Valid @RequestBody SignUpDto signUpDto) {
+
+        return createUserService.createOfficer(signUpDto);
     }
 
 }

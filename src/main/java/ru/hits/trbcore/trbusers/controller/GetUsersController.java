@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.hits.trbcore.trbusers.dto.ClientDto;
+import ru.hits.trbcore.trbusers.dto.OfficerDto;
 import ru.hits.trbcore.trbusers.service.GetUsersService;
 
 import java.util.UUID;
@@ -18,11 +19,20 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Tag(name = "Информация о пользователях")
 public class GetUsersController {
+
     private final GetUsersService getUsersService;
+
     @Operation(summary = "Получить информацию о клиенте.")
     @GetMapping("/client-info")
     ClientDto getClientInfo (@Valid @RequestParam UUID clientId) {
 
        return getUsersService.getClientInfo(clientId);
+    }
+
+    @Operation(summary = "Получить информацию о сотруднике.")
+    @GetMapping("/officer-info")
+    OfficerDto getOfficerInfo(@Valid @RequestParam UUID officerId) {
+
+        return getUsersService.getOfficerInfo(officerId);
     }
 }
