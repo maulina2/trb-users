@@ -21,14 +21,14 @@ public class CreateUsersController {
 
     private final CreateUserService createUserService;
 
-    @Operation(summary = "Зарегистрировать клиента.")
+    @Operation(summary = "Зарегистрировать клиента")
     @PostMapping("/create-client")
     ClientDto createClient (@Valid @RequestBody SignUpDto signUpDto) {
 
        return createUserService.createClient(signUpDto);
     }
 
-    @Operation(summary = "Зарегистрировать сотрудника.")
+    @Operation(summary = "Зарегистрировать сотрудника")
     @PostMapping("/create-officer")
     OfficerDto createOfficer(@Valid @RequestBody SignUpDto signUpDto) {
 

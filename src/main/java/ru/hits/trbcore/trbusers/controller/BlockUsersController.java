@@ -20,13 +20,13 @@ public class BlockUsersController {
 
     private final BlockUsersService blockUsersService;
 
-    @Operation(summary = "Заблокировать сотрудника.")
+    @Operation(summary = "Заблокировать сотрудника")
     @PostMapping("/block-officer")
     void blockOfficerInfo(@Valid @RequestBody BlockOfficerDto blockOfficerDto) {
 
          blockUsersService.blockOfficer(blockOfficerDto);
     }
-    @Operation(summary = "Заблокировать клиента.")
+    @Operation(summary = "Заблокировать клиента")
     @PostMapping("/block-client")
     void blockClientInfo(@Valid @RequestBody BlockClientDto blockClientDto) {
 
