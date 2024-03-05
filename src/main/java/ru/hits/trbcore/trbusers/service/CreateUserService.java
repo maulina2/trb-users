@@ -22,11 +22,14 @@ public class CreateUserService {
     private final OfficerMapper officerMapper;
     private final ClientRepository clientRepository;
     private final OfficerRepository officerRepository;
+    private final FindUserService findUserService;
 
     @Transactional
     public ClientDto createClient(SignUpDto signUpDto) {
 
         Client client = clientMapper.newDtoToEntity(signUpDto);
+        Officer officer = findUserService.findOfficer(signUpDto.getWhoCreated());
+        client.setWhoCreated(officer);
         client = clientRepository.save(client);
         return clientMapper.entityToDto(client);
     }
@@ -35,6 +38,8 @@ public class CreateUserService {
     public OfficerDto createOfficer(SignUpDto signUpDto) {
 
         Officer officer = officerMapper.newDtoToEntity(signUpDto);
+        Officer whoCreatedOfficer = findUserService.findOfficer(signUpDto.getWhoCreated());
+        officer.setWhoCreated(whoCreatedOfficer);
         officer = officerRepository.save(officer);
         return officerMapper.entityToDto(officer);
     }

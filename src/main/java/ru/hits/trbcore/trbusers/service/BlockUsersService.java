@@ -21,18 +21,20 @@ public class BlockUsersService {
     @Transactional
     public void blockOfficer(BlockOfficerDto blockOfficerDto) {
 
-        Officer officer = findUserService.findOfficer(blockOfficerDto.getOfficerId());
+        Officer targetOfficer = findUserService.findOfficer(blockOfficerDto.getOfficerId());
+        Officer  officer = findUserService.findOfficer(blockOfficerDto.getWhoBlocksId());
         officer.setBlocked(true);
-        officer.setWhoBlocked(blockOfficerDto.getWhoBlocksId());
-        officerRepository.save(officer);
+        officer.setWhoBlocked(officer);
+        officerRepository.save(targetOfficer);
     }
 
     @Transactional
     public void blockClient(BlockClientDto blockClientDto) {
 
         Client client = findUserService.findClient(blockClientDto.getClientId());
+        Officer officer = findUserService.findOfficer(blockClientDto.getOfficerId());
         client.setBlocked(true);
-        client.setWhoBlocked(blockClientDto.getOfficerId());
+        client.setWhoBlocked(officer);
         clientRepository.save(client);
     }
 

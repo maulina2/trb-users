@@ -2,13 +2,10 @@ package ru.hits.trbcore.trbusers.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.format.annotation.DateTimeFormat;
 import ru.hits.trbcore.trbusers.entity.enumeration.Sex;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -45,9 +42,11 @@ public class Client {
 
     private boolean isBlocked;
 
-    private UUID whoBlocked;
+    @ManyToOne
+    private Officer whoBlocked;
 
-    private UUID whoCreated;
+    @ManyToOne
+    private Officer whoCreated;
 
     @Enumerated(EnumType.STRING)
     private Sex sex;

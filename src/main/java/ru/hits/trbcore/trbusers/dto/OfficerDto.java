@@ -29,15 +29,19 @@ public class OfficerDto {
 
     private String address;
 
+    private String email;
+
+    private String password;
+
     private String passportNumber;
 
     private String passportSeries;
 
     private boolean isBlocked;
 
-    private UUID whoBlocked;
+    private OfficerDto whoBlocked;
 
-    private UUID whoCreated;
+    private OfficerDto whoCreated;
 
     @Enumerated(EnumType.STRING)
     private Sex sex;

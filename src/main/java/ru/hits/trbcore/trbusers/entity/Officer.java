@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import ru.hits.trbcore.trbusers.entity.enumeration.Sex;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -41,8 +42,23 @@ public class Officer {
 
     private boolean isBlocked;
 
-    private UUID whoBlocked;
-    private UUID whoCreated;
+    @ManyToOne
+    private Officer whoBlocked;
+
+    @ManyToOne
+    private Officer whoCreated;
+
+    @OneToMany(mappedBy = "whoCreated")
+    private List<Client> createdClients;
+
+    @OneToMany(mappedBy = "whoBlocked")
+    private List<Client> blockedClients;
+
+    @OneToMany(mappedBy = "whoCreated")
+    private List<Officer> createdOfficers;
+
+    @OneToMany(mappedBy = "whoBlocked")
+    private List<Officer> blockedOfficers;
 
     @Enumerated(EnumType.STRING)
     private Sex sex;

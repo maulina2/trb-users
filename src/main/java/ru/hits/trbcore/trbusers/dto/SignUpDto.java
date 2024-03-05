@@ -31,6 +31,10 @@ public class SignUpDto {
     @NotNull
     private UUID whoCreated;
 
+    private String email;
+
+    private String password;
+
     @NotNull
     @Enumerated(EnumType.STRING)
     private Sex sex;

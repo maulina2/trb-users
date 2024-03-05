@@ -15,6 +15,7 @@ import ru.hits.trbcore.trbusers.entity.Client;
 public interface ClientMapper {
 
     @Mapping(target = "isBlocked", expression = "java(false)")
+    @Mapping(target = "whoCreated", ignore = true)
     Client newDtoToEntity(SignUpDto dto);
 
     ClientDto entityToDto(Client client);

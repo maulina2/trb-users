@@ -15,6 +15,7 @@ import ru.hits.trbcore.trbusers.entity.Officer;
 )
 public interface OfficerMapper {
     @Mapping(target = "isBlocked", expression = "java(false)")
+    @Mapping(target = "whoCreated", ignore = true)
     Officer newDtoToEntity(SignUpDto dto);
 
     OfficerDto entityToDto(Officer officer);

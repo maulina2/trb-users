@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import ru.hits.trbcore.trbusers.entity.enumeration.Sex;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -26,6 +25,10 @@ public class ClientDto {
 
     private LocalDate birthDate;
 
+    private String email;
+
+    private String password;
+
     private String phoneNumber;
 
     private String address;
@@ -36,9 +39,9 @@ public class ClientDto {
 
     private boolean isBlocked;
 
-    private UUID whoBlocked;
+    private OfficerDto whoBlocked;
 
-    private UUID whoCreated;
+    private OfficerDto whoCreated;
 
     @Enumerated(EnumType.STRING)
     private Sex sex;
