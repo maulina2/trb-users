@@ -31,8 +31,6 @@ public class OfficerDto {
 
     private String email;
 
-    private String password;
-
     private String passportNumber;
 
     private String passportSeries;

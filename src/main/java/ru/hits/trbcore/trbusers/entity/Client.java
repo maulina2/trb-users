@@ -40,6 +40,10 @@ public class Client {
 
     private String passportSeries;
 
+    private String email;
+
+    private String password;
+
     private boolean isBlocked;
 
     @ManyToOne

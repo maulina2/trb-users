@@ -36,6 +36,10 @@ public class Officer {
 
     private String address;
 
+    private String email;
+
+    private String password;
+
     private String passportNumber;
 
     private String passportSeries;

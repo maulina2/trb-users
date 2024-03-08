@@ -31,8 +31,9 @@ public class SignUpDto {
     @NotNull
     private UUID whoCreated;
 
+    @NotNull
     private String email;
-
+    @NotNull
     private String password;
 
     @NotNull
