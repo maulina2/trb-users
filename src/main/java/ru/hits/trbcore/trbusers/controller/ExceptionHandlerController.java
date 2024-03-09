@@ -6,7 +6,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import ru.hits.trbcore.trbusers.exception.ApiError;
 import ru.hits.trbcore.trbusers.exception.ConflictException;
@@ -60,9 +59,7 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(ConflictException.class)
-    public ResponseEntity<ApiError> handleConflictException(ConflictException exception,
-                                                            WebRequest request
-    ) {
+    public ResponseEntity<ApiError> handleConflictException(ConflictException exception) {
         return new ResponseEntity<>(new ApiError(exception.getMessage()), HttpStatus.CONFLICT);
     }
 }
