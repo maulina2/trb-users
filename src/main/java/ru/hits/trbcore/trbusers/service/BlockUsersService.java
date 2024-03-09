@@ -23,8 +23,8 @@ public class BlockUsersService {
 
         Officer targetOfficer = findUserService.findOfficer(blockOfficerDto.getOfficerId());
         Officer  officer = findUserService.findOfficer(blockOfficerDto.getWhoBlocksId());
-        officer.setBlocked(true);
-        officer.setWhoBlocked(officer);
+        targetOfficer.setBlocked(true);
+        targetOfficer.setWhoBlocked(officer);
         officerRepository.save(targetOfficer);
     }
 
