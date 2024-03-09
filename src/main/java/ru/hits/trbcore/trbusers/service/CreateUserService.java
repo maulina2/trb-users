@@ -10,6 +10,7 @@ import ru.hits.trbcore.trbusers.dto.OfficerDto;
 import ru.hits.trbcore.trbusers.dto.SignUpDto;
 import ru.hits.trbcore.trbusers.entity.Client;
 import ru.hits.trbcore.trbusers.entity.Officer;
+import ru.hits.trbcore.trbusers.exception.ConflictException;
 import ru.hits.trbcore.trbusers.mapper.ClientMapper;
 import ru.hits.trbcore.trbusers.mapper.OfficerMapper;
 import ru.hits.trbcore.trbusers.repository.ClientRepository;
@@ -29,6 +30,7 @@ public class CreateUserService {
     @Transactional
     public ClientDto createClient(SignUpDto signUpDto) {
 
+        checkDoubleClientEmail(signUpDto.getEmail());
         Client client = clientMapper.newDtoToEntity(signUpDto);
         var password = passwordEncoder.encode(signUpDto.getPassword());
         client.setPassword(password);
@@ -41,6 +43,7 @@ public class CreateUserService {
     @Transactional
     public OfficerDto createOfficer(SignUpDto signUpDto) {
 
+        checkDoubleOfficerEmail(signUpDto.getEmail());
         Officer officer = officerMapper.newDtoToEntity(signUpDto);
         var password = passwordEncoder.encode(signUpDto.getPassword());
         officer.setPassword(password);
@@ -50,4 +53,15 @@ public class CreateUserService {
         return officerMapper.entityToDto(officer);
     }
 
+
+    private void checkDoubleClientEmail(String email) {
+        if (clientRepository.existsByEmail(email)) {
+            throw new ConflictException("Пользователь с такой почтой уже существует");
+        }
+    }
+    private void checkDoubleOfficerEmail(String email) {
+        if (officerRepository.existsByEmail(email)) {
+            throw new ConflictException("Пользователь с такой почтой уже существует");
+        }
+    }
 }
