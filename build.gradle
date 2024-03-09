@@ -22,7 +22,7 @@ dependencies {
 
     implementation "org.postgresql:postgresql:${postgreSqlDriverVersion}"
     implementation "org.flywaydb:flyway-core:${flywayCoreVersion}"
-    implementation "org.springframework.boot:spring-boot-starter-security"
+    implementation "org.springframework.security:spring-security-crypto"
 
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"

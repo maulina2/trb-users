@@ -2,6 +2,7 @@ package ru.hits.trbcore.trbusers.service;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.hits.trbcore.trbusers.dto.ClientDto;
@@ -23,11 +24,14 @@ public class CreateUserService {
     private final ClientRepository clientRepository;
     private final OfficerRepository officerRepository;
     private final FindUserService findUserService;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public ClientDto createClient(SignUpDto signUpDto) {
 
         Client client = clientMapper.newDtoToEntity(signUpDto);
+        var password = passwordEncoder.encode(signUpDto.getPassword());
+        client.setPassword(password);
         Officer officer = findUserService.findOfficer(signUpDto.getWhoCreated());
         client.setWhoCreated(officer);
         client = clientRepository.save(client);
@@ -38,6 +42,8 @@ public class CreateUserService {
     public OfficerDto createOfficer(SignUpDto signUpDto) {
 
         Officer officer = officerMapper.newDtoToEntity(signUpDto);
+        var password = passwordEncoder.encode(signUpDto.getPassword());
+        officer.setPassword(password);
         Officer whoCreatedOfficer = findUserService.findOfficer(signUpDto.getWhoCreated());
         officer.setWhoCreated(whoCreatedOfficer);
         officer = officerRepository.save(officer);
