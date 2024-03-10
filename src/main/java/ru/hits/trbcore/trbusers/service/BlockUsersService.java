@@ -7,6 +7,7 @@ import ru.hits.trbcore.trbusers.dto.BlockClientDto;
 import ru.hits.trbcore.trbusers.dto.BlockOfficerDto;
 import ru.hits.trbcore.trbusers.entity.Client;
 import ru.hits.trbcore.trbusers.entity.Officer;
+import ru.hits.trbcore.trbusers.exception.ConflictException;
 import ru.hits.trbcore.trbusers.repository.ClientRepository;
 import ru.hits.trbcore.trbusers.repository.OfficerRepository;
 
@@ -21,8 +22,9 @@ public class BlockUsersService {
     @Transactional
     public void blockOfficer(BlockOfficerDto blockOfficerDto) {
 
+        checkSelfBlock(blockOfficerDto);
         Officer targetOfficer = findUserService.findOfficer(blockOfficerDto.getOfficerId());
-        Officer  officer = findUserService.findOfficer(blockOfficerDto.getWhoBlocksId());
+        Officer officer = findUserService.findOfficer(blockOfficerDto.getWhoBlocksId());
         targetOfficer.setBlocked(true);
         targetOfficer.setWhoBlocked(officer);
         officerRepository.save(targetOfficer);
@@ -38,4 +40,10 @@ public class BlockUsersService {
         clientRepository.save(client);
     }
 
+    private void checkSelfBlock(BlockOfficerDto blockOfficerDto){
+
+        if(blockOfficerDto.getWhoBlocksId() == blockOfficerDto.getOfficerId()){
+            throw new ConflictException("Нельзя заблокировать самого себя");
+        }
+    }
 }
