@@ -1,6 +1,8 @@
 package ru.hits.trbcore.trbusers.service;
 
-
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.UserRecord;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,8 +29,9 @@ public class CreateUserService {
     private final FindUserService findUserService;
     private final PasswordEncoder passwordEncoder;
 
+
     @Transactional
-    public ClientDto createClient(SignUpDto signUpDto) {
+    public ClientDto createClient(SignUpDto signUpDto) throws FirebaseAuthException {
 
         checkDoubleClientEmail(signUpDto.getEmail());
         Client client = clientMapper.newDtoToEntity(signUpDto);
@@ -37,6 +40,13 @@ public class CreateUserService {
         Officer officer = findUserService.findOfficer(signUpDto.getWhoCreated());
         client.setWhoCreated(officer);
         client = clientRepository.save(client);
+
+        UserRecord.CreateRequest request = new UserRecord.CreateRequest()
+                .setEmail(signUpDto.getEmail())
+                .setEmailVerified(false)
+                .setPassword(signUpDto.getPassword());
+
+       FirebaseAuth.getInstance().createUser(request);
         return clientMapper.entityToDto(client);
     }
 
@@ -59,6 +69,7 @@ public class CreateUserService {
             throw new ConflictException("Пользователь с такой почтой уже существует");
         }
     }
+
     private void checkDoubleOfficerEmail(String email) {
         if (officerRepository.existsByEmail(email)) {
             throw new ConflictException("Пользователь с такой почтой уже существует");

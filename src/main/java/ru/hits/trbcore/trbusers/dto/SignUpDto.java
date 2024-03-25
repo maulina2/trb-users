@@ -33,7 +33,9 @@ public class SignUpDto {
 
     @NotNull
     private String email;
+
     @NotNull
+    //@Size(min=6, max=30, message="Длина пароля должна быть между 6 и 30 символами")
     private String password;
 
     @NotNull

@@ -1,5 +1,6 @@
 package ru.hits.trbcore.trbusers.controller;
 
+import com.google.firebase.auth.FirebaseAuthException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -23,7 +24,7 @@ public class CreateUsersController {
 
     @Operation(summary = "Зарегистрировать клиента")
     @PostMapping("/create-client")
-    ClientDto createClient (@Valid @RequestBody SignUpDto signUpDto) {
+    ClientDto createClient (@Valid @RequestBody SignUpDto signUpDto) throws FirebaseAuthException {
 
        return createUserService.createClient(signUpDto);
     }
