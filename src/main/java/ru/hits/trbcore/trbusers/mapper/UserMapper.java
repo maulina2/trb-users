@@ -4,20 +4,20 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;
-import ru.hits.trbcore.trbusers.dto.ClientDto;
 import ru.hits.trbcore.trbusers.dto.SignUpDto;
-import ru.hits.trbcore.trbusers.entity.Client;
+import ru.hits.trbcore.trbusers.dto.UserDto;
+import ru.hits.trbcore.trbusers.entity.User;
 
 @Mapper(
         componentModel = MappingConstants.ComponentModel.SPRING,
         unmappedTargetPolicy = ReportingPolicy.IGNORE
 )
-public interface ClientMapper {
+public interface UserMapper {
 
     @Mapping(target = "isBlocked", expression = "java(false)")
     @Mapping(target = "whoCreated", ignore = true)
-    Client newDtoToEntity(SignUpDto dto);
+    User newDtoToEntity(SignUpDto dto);
 
-    ClientDto entityToDto(Client client);
+    UserDto entityToDto(User client);
 
 }

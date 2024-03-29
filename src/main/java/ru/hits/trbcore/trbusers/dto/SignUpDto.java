@@ -4,6 +4,8 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
+import ru.hits.trbcore.trbusers.entity.enumeration.Role;
 import ru.hits.trbcore.trbusers.entity.enumeration.Sex;
 
 import java.time.LocalDate;
@@ -35,10 +37,14 @@ public class SignUpDto {
     private String email;
 
     @NotNull
-    //@Size(min=6, max=30, message="Длина пароля должна быть между 6 и 30 символами")
+    @Length(min = 6, max = 30, message = "Длина пароля должна быть между 6 и 30 символами")
     private String password;
 
     @NotNull
     @Enumerated(EnumType.STRING)
     private Sex sex;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private Role role;
 }

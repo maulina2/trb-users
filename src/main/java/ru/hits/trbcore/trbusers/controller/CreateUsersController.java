@@ -9,9 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.hits.trbcore.trbusers.dto.ClientDto;
-import ru.hits.trbcore.trbusers.dto.OfficerDto;
 import ru.hits.trbcore.trbusers.dto.SignUpDto;
+import ru.hits.trbcore.trbusers.dto.UserDto;
 import ru.hits.trbcore.trbusers.service.CreateUserService;
 
 @RestController
@@ -22,18 +21,11 @@ public class CreateUsersController {
 
     private final CreateUserService createUserService;
 
-    @Operation(summary = "Зарегистрировать клиента")
-    @PostMapping("/create-client")
-    ClientDto createClient (@Valid @RequestBody SignUpDto signUpDto) throws FirebaseAuthException {
+    @Operation(summary = "Зарегистрировать пользователя")
+    @PostMapping("/create-user")
+    UserDto createClient(@Valid @RequestBody SignUpDto signUpDto) throws FirebaseAuthException {
 
-       return createUserService.createClient(signUpDto);
-    }
-
-    @Operation(summary = "Зарегистрировать сотрудника")
-    @PostMapping("/create-officer")
-    OfficerDto createOfficer(@Valid @RequestBody SignUpDto signUpDto) {
-
-        return createUserService.createOfficer(signUpDto);
+        return createUserService.createUser(signUpDto);
     }
 
 }

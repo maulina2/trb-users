@@ -10,9 +10,9 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class BlockOfficerDto {
+public class BlockUserDto {
     @NotNull
-    private UUID officerId;
+    private UUID userId;
 
     @NotNull
     private UUID whoBlocksId;

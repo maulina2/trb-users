@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import ru.hits.trbcore.trbusers.entity.enumeration.Sex;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -14,7 +15,8 @@ import java.util.UUID;
 @Getter
 @Setter
 @Builder
-public class Client {
+@Table(name = "_user")
+public class User {
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -46,13 +48,23 @@ public class Client {
 
     private boolean isBlocked;
 
-    @ManyToOne
-    private Officer whoBlocked;
+    private boolean isClient;
+
+    private boolean isOfficer;
 
     @ManyToOne
-    private Officer whoCreated;
+    private User whoBlocked;
+
+    @ManyToOne
+    private User whoCreated;
 
     @Enumerated(EnumType.STRING)
     private Sex sex;
+
+    @OneToMany(mappedBy = "whoCreated")
+    private List<User> createdUsers;
+
+    @OneToMany(mappedBy = "whoBlocked")
+    private List<User> blockedUsers;
 
 }

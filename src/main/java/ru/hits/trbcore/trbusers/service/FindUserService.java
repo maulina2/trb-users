@@ -3,11 +3,9 @@ package ru.hits.trbcore.trbusers.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.hits.trbcore.trbusers.entity.Client;
-import ru.hits.trbcore.trbusers.entity.Officer;
+import ru.hits.trbcore.trbusers.entity.User;
 import ru.hits.trbcore.trbusers.exception.NotFoundException;
-import ru.hits.trbcore.trbusers.repository.ClientRepository;
-import ru.hits.trbcore.trbusers.repository.OfficerRepository;
+import ru.hits.trbcore.trbusers.repository.UserRepository;
 
 import java.util.UUID;
 
@@ -15,18 +13,12 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class FindUserService {
 
-    private final ClientRepository clientRepository;
-    private final OfficerRepository officerRepository;
+    private final UserRepository userRepository;
 
-    Client findClient(UUID clientId) {
-        return clientRepository.findById(clientId)
+    User findUser(UUID clientId) {
+        return userRepository.findById(clientId)
                 .orElseThrow(() -> new NotFoundException
-                        ("Клиент не найден."));
+                        ("Пользователь не найден."));
     }
 
-    Officer findOfficer(UUID officerId) {
-        return officerRepository.findById(officerId)
-                .orElseThrow(() -> new NotFoundException
-                        ("Сотрудник не найден."));
-    }
 }

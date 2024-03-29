@@ -6,15 +6,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.hits.trbcore.trbusers.dto.ClientDto;
-import ru.hits.trbcore.trbusers.dto.OfficerDto;
 import ru.hits.trbcore.trbusers.dto.PageDto;
-import ru.hits.trbcore.trbusers.entity.Client;
-import ru.hits.trbcore.trbusers.entity.Officer;
-import ru.hits.trbcore.trbusers.mapper.ClientMapper;
-import ru.hits.trbcore.trbusers.mapper.OfficerMapper;
-import ru.hits.trbcore.trbusers.repository.ClientRepository;
-import ru.hits.trbcore.trbusers.repository.OfficerRepository;
+import ru.hits.trbcore.trbusers.dto.UserDto;
+import ru.hits.trbcore.trbusers.entity.User;
+import ru.hits.trbcore.trbusers.mapper.UserMapper;
+import ru.hits.trbcore.trbusers.repository.UserRepository;
 
 import java.util.UUID;
 
@@ -22,44 +18,28 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class GetUsersService {
 
-    private final ClientRepository clientRepository;
-    private final OfficerRepository officerRepository;
-    private final ClientMapper clientMapper;
-    private final OfficerMapper officerMapper;
+    private final UserRepository userRepository;
+    private final UserMapper userMapper;
     private final FindUserService findUserService;
 
     @Transactional(readOnly = true)
-    public ClientDto getClientInfo(UUID clientId) {
+    public UserDto getClientInfo(UUID clientId) {
 
-        Client client = findUserService.findClient(clientId);
-        return clientMapper.entityToDto(client);
+        User client = findUserService.findUser(clientId);
+        return userMapper.entityToDto(client);
     }
 
     @Transactional(readOnly = true)
-    public OfficerDto getOfficerInfo(UUID officerId) {
-
-        Officer officer = findUserService.findOfficer(officerId);
-        return officerMapper.entityToDto(officer);
-    }
-
-    @Transactional(readOnly = true)
-    public Page<ClientDto> getClientPage(PageDto pageDto) {
+    public Page<UserDto> getClientPage(PageDto pageDto) {
 
         Pageable pageable = createPageable(pageDto);
-        return clientRepository.findAll(pageable).map(clientMapper::entityToDto);
+        return userRepository.findAll(pageable).map(userMapper::entityToDto);
     }
 
-    @Transactional(readOnly = true)
-    public Page<OfficerDto> getOfficerPage(PageDto pageDto) {
-
-        Pageable pageable = createPageable(pageDto);
-        return officerRepository.findAll(pageable).map(officerMapper::entityToDto);
-    }
     private Pageable createPageable(PageDto pageDto) {
         int page = pageDto.getPageNumber();
         int size = pageDto.getPageSize();
         return PageRequest.of(page, size);
     }
-
 
 }

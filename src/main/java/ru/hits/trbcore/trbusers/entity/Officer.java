@@ -52,11 +52,11 @@ public class Officer {
     @ManyToOne
     private Officer whoCreated;
 
-    @OneToMany(mappedBy = "whoCreated")
-    private List<Client> createdClients;
-
-    @OneToMany(mappedBy = "whoBlocked")
-    private List<Client> blockedClients;
+//    @OneToMany(mappedBy = "whoCreated")
+//    private List<Officer> createdClients;
+//
+//    @OneToMany(mappedBy = "whoBlocked")
+//    private List<> blockedClients;
 
     @OneToMany(mappedBy = "whoCreated")
     private List<Officer> createdOfficers;

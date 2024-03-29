@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.hits.trbcore.trbusers.dto.BlockClientDto;
-import ru.hits.trbcore.trbusers.dto.BlockOfficerDto;
 import ru.hits.trbcore.trbusers.service.BlockUsersService;
 
 @RestController
@@ -20,12 +19,6 @@ public class BlockUsersController {
 
     private final BlockUsersService blockUsersService;
 
-    @Operation(summary = "Заблокировать сотрудника")
-    @PostMapping("/block-officer")
-    void blockOfficerInfo(@Valid @RequestBody BlockOfficerDto blockOfficerDto) {
-
-         blockUsersService.blockOfficer(blockOfficerDto);
-    }
     @Operation(summary = "Заблокировать клиента")
     @PostMapping("/block-client")
     void blockClientInfo(@Valid @RequestBody BlockClientDto blockClientDto) {

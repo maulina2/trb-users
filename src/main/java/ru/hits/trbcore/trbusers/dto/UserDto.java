@@ -13,7 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class ClientDto {
+public class UserDto {
 
     private UUID id;
 
@@ -29,6 +29,10 @@ public class ClientDto {
 
     private String phoneNumber;
 
+    private boolean isClient;
+
+    private boolean isOfficer;
+
     private String address;
 
     private String passportNumber;
@@ -37,9 +41,9 @@ public class ClientDto {
 
     private boolean isBlocked;
 
-    private OfficerDto whoBlocked;
+    private UserDto whoBlocked;
 
-    private OfficerDto whoCreated;
+    private UserDto whoCreated;
 
     @Enumerated(EnumType.STRING)
     private Sex sex;
