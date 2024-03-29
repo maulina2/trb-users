@@ -47,7 +47,8 @@ public class CreateUserService {
                 .setPassword(signUpDto.getPassword());
 
         Map<String, Object> claims = new HashMap<>();
-        claims.put("role", signUpDto.getRole().toString());
+        claims.put("officer", signUpDto.isOfficer());
+        claims.put("client", signUpDto.isClient());
         UserRecord userRecord = FirebaseAuth.getInstance().createUser(request);
         FirebaseAuth.getInstance().setCustomUserClaims(userRecord.getUid(), claims);
 

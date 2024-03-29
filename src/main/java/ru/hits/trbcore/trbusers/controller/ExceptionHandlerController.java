@@ -7,10 +7,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import ru.hits.trbcore.trbusers.exception.ApiError;
-import ru.hits.trbcore.trbusers.exception.ConflictException;
-import ru.hits.trbcore.trbusers.exception.NotFoundException;
-import ru.hits.trbcore.trbusers.exception.UnauthorizedException;
+import ru.hits.trbcore.trbusers.exception.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,5 +58,11 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
     @ExceptionHandler(ConflictException.class)
     public ResponseEntity<ApiError> handleConflictException(ConflictException exception) {
         return new ResponseEntity<>(new ApiError(exception.getMessage()), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity<ApiError> handleForbiddenException(ForbiddenException exception
+    ) {
+        return new ResponseEntity<>(new ApiError(exception.getMessage()), HttpStatus.FORBIDDEN);
     }
 }

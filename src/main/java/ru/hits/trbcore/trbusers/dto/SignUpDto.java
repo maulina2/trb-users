@@ -2,10 +2,10 @@ package ru.hits.trbcore.trbusers.dto;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
-import ru.hits.trbcore.trbusers.entity.enumeration.Role;
 import ru.hits.trbcore.trbusers.entity.enumeration.Sex;
 
 import java.time.LocalDate;
@@ -34,6 +34,7 @@ public class SignUpDto {
     private UUID whoCreated;
 
     @NotNull
+    @Email
     private String email;
 
     @NotNull
@@ -45,6 +46,8 @@ public class SignUpDto {
     private Sex sex;
 
     @NotNull
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    private boolean isOfficer;
+
+    @NotNull
+    private boolean isClient;
 }
