@@ -31,26 +31,14 @@ public class CreateUserService {
     public UserDto createUser(SignUpDto signUpDto) throws FirebaseAuthException {
 
         checkDoubleClientEmail(signUpDto.getEmail());
-
         User user = userMapper.newDtoToEntity(signUpDto);
         var password = passwordEncoder.encode(signUpDto.getPassword());
         user.setPassword(password);
 
         User officer = findUserService.findUser(signUpDto.getWhoCreated());
         user.setWhoCreated(officer);
-
         user = userRepository.save(user);
-
-        UserRecord.CreateRequest request = new UserRecord.CreateRequest()
-                .setEmail(signUpDto.getEmail())
-                .setEmailVerified(false)
-                .setPassword(signUpDto.getPassword());
-
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("officer", signUpDto.isOfficer());
-        claims.put("client", signUpDto.isClient());
-        UserRecord userRecord = FirebaseAuth.getInstance().createUser(request);
-        FirebaseAuth.getInstance().setCustomUserClaims(userRecord.getUid(), claims);
+        createUserInFireBase(user);
 
         return userMapper.entityToDto(user);
     }
@@ -60,6 +48,20 @@ public class CreateUserService {
         if (userRepository.existsByEmail(email)) {
             throw new ConflictException("Пользователь с такой почтой уже существует");
         }
+    }
+
+    private void createUserInFireBase(User user) throws FirebaseAuthException {
+        UserRecord.CreateRequest request = new UserRecord.CreateRequest()
+                .setEmail(user.getEmail())
+                .setEmailVerified(false)
+                .setPassword(user.getPassword());
+
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("officer", user.isOfficer());
+        claims.put("client", user.isClient());
+        claims.put("id", user.getId());
+        UserRecord userRecord = FirebaseAuth.getInstance().createUser(request);
+        FirebaseAuth.getInstance().setCustomUserClaims(userRecord.getUid(), claims);
     }
 
 }
