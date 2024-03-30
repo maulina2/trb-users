@@ -40,11 +40,11 @@ public class User {
 
     private String password;
 
-    private boolean isBlocked;
+    private Boolean isBlocked;
 
-    private boolean isClient;
+    private Boolean isClient;
 
-    private boolean isOfficer;
+    private Boolean isOfficer;
 
     @ManyToOne
     private User whoBlocked;

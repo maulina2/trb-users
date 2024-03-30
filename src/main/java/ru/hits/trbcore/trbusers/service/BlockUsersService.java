@@ -26,7 +26,7 @@ public class BlockUsersService {
         User user = findUserService.findUser(blockUserDto.getUserId());
         User officer = checkPermissionService.checkPermission(blockUserDto.getWhoBlocksId());
 
-        user.setBlocked(true);
+        user.setIsBlocked(true);
         user.setWhoBlocked(officer);
         blockUserInFireBase(user.getId().toString());
         userRepository.save(user);

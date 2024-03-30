@@ -46,8 +46,8 @@ public class SignUpDto {
     private Sex sex;
 
     @NotNull
-    private boolean isOfficer;
+    private Boolean isOfficer;
 
     @NotNull
-    private boolean isClient;
+    private Boolean isClient;
 }

@@ -15,7 +15,7 @@ public class CheckPermissionService {
 
     public User checkPermission(UUID userId) {
         User user = findUserService.findUser(userId);
-        if (!user.isOfficer()) {
+        if (!user.getIsOfficer()) {
             throw new ForbiddenException("У вас недостаточно прав");
         }
         return user;

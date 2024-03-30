@@ -29,9 +29,9 @@ public class UserDto {
 
     private String phoneNumber;
 
-    private boolean isClient;
+    private Boolean isClient;
 
-    private boolean isOfficer;
+    private Boolean isOfficer;
 
     private String address;
 
