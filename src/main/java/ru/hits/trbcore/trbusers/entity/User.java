@@ -2,7 +2,6 @@ package ru.hits.trbcore.trbusers.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 import ru.hits.trbcore.trbusers.entity.enumeration.Sex;
 
 import java.time.LocalDate;
@@ -19,11 +18,6 @@ import java.util.UUID;
 public class User {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator"
-    )
     private UUID id;
 
     private String firstName;

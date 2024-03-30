@@ -16,6 +16,7 @@ import ru.hits.trbcore.trbusers.repository.UserRepository;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -37,9 +38,10 @@ public class CreateUserService {
 
         User officer = findUserService.findUser(signUpDto.getWhoCreated());
         user.setWhoCreated(officer);
-        createUserInFireBase(signUpDto, user.getId().toString());
-
+        var id = UUID.randomUUID();
+        user.setId(id);
         user = userRepository.save(user);
+        createUserInFireBase(signUpDto, id.toString());
 
         return userMapper.entityToDto(user);
     }
