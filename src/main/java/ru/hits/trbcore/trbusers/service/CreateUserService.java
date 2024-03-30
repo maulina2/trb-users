@@ -37,8 +37,9 @@ public class CreateUserService {
 
         User officer = findUserService.findUser(signUpDto.getWhoCreated());
         user.setWhoCreated(officer);
+        createUserInFireBase(signUpDto, user.getId().toString());
+
         user = userRepository.save(user);
-        createUserInFireBase(user, signUpDto.getPassword());
 
         return userMapper.entityToDto(user);
     }
@@ -50,16 +51,16 @@ public class CreateUserService {
         }
     }
 
-    private void createUserInFireBase(User user, String password) throws FirebaseAuthException {
+    private void createUserInFireBase(SignUpDto signUpDto, String id) throws FirebaseAuthException {
         UserRecord.CreateRequest request = new UserRecord.CreateRequest()
-                .setEmail(user.getEmail())
+                .setEmail(signUpDto.getEmail())
                 .setEmailVerified(false)
-                .setPassword(password);
+                .setPassword(signUpDto.getPassword());
 
         Map<String, Object> claims = new HashMap<>();
-        claims.put("officer", user.isOfficer());
-        claims.put("client", user.isClient());
-        claims.put("id", user.getId());
+        claims.put("officer", signUpDto.isOfficer());
+        claims.put("client", signUpDto.isClient());
+        claims.put("id", id);
         UserRecord userRecord = FirebaseAuth.getInstance().createUser(request);
         FirebaseAuth.getInstance().setCustomUserClaims(userRecord.getUid(), claims);
     }
