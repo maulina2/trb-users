@@ -1,6 +1,5 @@
 package ru.hits.trbcore.trbusers.controller;
 
-import com.google.firebase.auth.FirebaseAuthException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -20,9 +19,9 @@ public class BlockUsersController {
 
     private final BlockUsersService blockUsersService;
 
-    @Operation(summary = "Заблокировать клиента")
-    @PostMapping("/block-client")
-    void blockClientInfo(@Valid @RequestBody BlockUserDto blockUserDto) throws FirebaseAuthException {
+    @Operation(summary = "Заблокировать пользователя")
+    @PostMapping("/block-user")
+    void blockClientInfo(@Valid @RequestBody BlockUserDto blockUserDto) {
 
         blockUsersService.blockClient(blockUserDto);
     }

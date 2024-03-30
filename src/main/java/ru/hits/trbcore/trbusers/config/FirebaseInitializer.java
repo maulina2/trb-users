@@ -6,19 +6,20 @@ import com.google.firebase.FirebaseOptions;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 @Component
 public class FirebaseInitializer {
 
     @PostConstruct
     public void initialize() throws IOException {
-        FileInputStream serviceAccount =
-                new FileInputStream("src\\main\\resources\\serviceAccountKey.json");
+
+        InputStream fileStream = getClass().getClassLoader().getResourceAsStream("serviceAccountKey.json");
 
         FirebaseOptions options = FirebaseOptions.builder()
-                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                .setCredentials(GoogleCredentials.fromStream(fileStream))
+                .setProjectId("trb-officer-android")
                 .build();
 
         FirebaseApp.initializeApp(options);
