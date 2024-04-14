@@ -39,7 +39,7 @@ public class UserDto {
 
     private String passportSeries;
 
-    private boolean isBlocked;
+    private Boolean isBlocked;
 
     private UserDto whoBlocked;
 
