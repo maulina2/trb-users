@@ -65,4 +65,10 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
     ) {
         return new ResponseEntity<>(new ApiError(exception.getMessage()), HttpStatus.FORBIDDEN);
     }
+
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<ApiError> handleForbiddenException(BadRequestException exception
+    ) {
+        return new ResponseEntity<>(new ApiError(exception.getMessage()), HttpStatus.BAD_REQUEST);
+    }
 }

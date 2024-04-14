@@ -61,4 +61,5 @@ public class User {
     @OneToMany(mappedBy = "whoBlocked")
     private List<User> blockedUsers;
 
+    private String firebaseId;
 }

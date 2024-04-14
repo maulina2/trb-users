@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.hits.trbcore.trbusers.dto.BlockUserDto;
 import ru.hits.trbcore.trbusers.entity.User;
+import ru.hits.trbcore.trbusers.exception.BadRequestException;
 import ru.hits.trbcore.trbusers.exception.ConflictException;
 import ru.hits.trbcore.trbusers.repository.UserRepository;
 
@@ -23,12 +24,13 @@ public class BlockUsersService {
     public void blockClient(BlockUserDto blockUserDto) {
 
         checkSelfBlock(blockUserDto);
+        checkBlock(blockUserDto);
         User user = findUserService.findUser(blockUserDto.getUserId());
         User officer = checkPermissionService.checkPermission(blockUserDto.getWhoBlocksId());
 
         user.setIsBlocked(true);
         user.setWhoBlocked(officer);
-        blockUserInFireBase(user.getId().toString());
+        blockUserInFireBase(user.getFirebaseId());
         userRepository.save(user);
     }
 
@@ -36,6 +38,13 @@ public class BlockUsersService {
 
         if (blockUserDto.getWhoBlocksId() == blockUserDto.getUserId()) {
             throw new ConflictException("Нельзя заблокировать самого себя");
+        }
+    }
+
+    private void checkBlock(BlockUserDto blockUserDto) {
+
+        if (findUserService.findUser(blockUserDto.getUserId()).getIsBlocked()) {
+            throw new BadRequestException("Пользователь уже заблокирован");
         }
     }
 

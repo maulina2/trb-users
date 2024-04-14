@@ -1,0 +1,2 @@
+ALTER TABLE _user
+    ADD COLUMN firebase_id VARCHAR(255) DEFAULT NULL;

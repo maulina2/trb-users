@@ -40,9 +40,9 @@ public class CreateUserService {
         user.setWhoCreated(officer);
         var id = UUID.randomUUID();
         user.setId(id);
+        String firebaseId = createUserInFireBase(signUpDto, id.toString());
+        user.setFirebaseId(firebaseId);
         user = userRepository.save(user);
-        createUserInFireBase(signUpDto, id.toString());
-
         return userMapper.entityToDto(user);
     }
 
@@ -53,7 +53,7 @@ public class CreateUserService {
         }
     }
 
-    private void createUserInFireBase(SignUpDto signUpDto, String id) throws FirebaseAuthException {
+    private String createUserInFireBase(SignUpDto signUpDto, String id) throws FirebaseAuthException {
         UserRecord.CreateRequest request = new UserRecord.CreateRequest()
                 .setEmail(signUpDto.getEmail())
                 .setEmailVerified(false)
@@ -65,6 +65,7 @@ public class CreateUserService {
         claims.put("id", id);
         UserRecord userRecord = FirebaseAuth.getInstance().createUser(request);
         FirebaseAuth.getInstance().setCustomUserClaims(userRecord.getUid(), claims);
+        return userRecord.getUid();
     }
 
 }
