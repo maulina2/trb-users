@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: trb-users
   datasource:
     url: jdbc:postgresql://trb-users-db:5432/${DB_NAME}
     username: ${DB_USER}
@@ -10,7 +12,7 @@ spring:
   flyway:
     locations: migrations
 random-error:
-  is-enable: true
+  is-enable: ${RANDOM_ERROR_IS_ENABLE:true}
   probability-average: 0.5
   probability-extreme: 0.9
   extreme-period-duration-min: 1
