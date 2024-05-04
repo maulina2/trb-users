@@ -17,3 +17,21 @@ random-error:
   probability-extreme: 0.9
   extreme-period-duration-min: 1
   extreme-period-frequency-min: 2
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - info
+          - health
+          - prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}
+  zipkin:
+    tracing:
+      endpoint: ${GRAFANA_TEMPO_URL}
+  tracing:
+    sampling:
+      probability: 1.0
